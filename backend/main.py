@@ -247,15 +247,20 @@ async def placeholder_comic(page_id: int):
     return {"message": f"Comic page {page_id} will be served here"}
 
 # Serve frontend static files
-frontend_path = Path(__file__).parent.parent / "frontend"
+frontend_dist_path = Path(__file__).parent.parent / "frontend" / "dist"
 
 # Mount static files
-app.mount("/assets", StaticFiles(directory=str(frontend_path / "src")), name="assets")
+if frontend_dist_path.exists():
+    app.mount("/assets", StaticFiles(directory=str(frontend_dist_path / "assets")), name="assets")
 
 # Serve index.html for all frontend routes
 @app.get("/")
 async def serve_frontend():
-    return FileResponse(str(frontend_path / "index.html"))
+    index_path = frontend_dist_path / "index.html"
+    if index_path.exists():
+        return FileResponse(str(index_path))
+    else:
+        return {"message": "Frontend not built. Run 'npm run build' in frontend directory."}
 
 @app.get("/{path:path}")
 async def serve_frontend_routes(path: str):
@@ -264,7 +269,11 @@ async def serve_frontend_routes(path: str):
         raise HTTPException(status_code=404, detail="API endpoint not found")
     
     # For all other routes, serve the frontend
-    return FileResponse(str(frontend_path / "index.html"))
+    index_path = frontend_dist_path / "index.html"
+    if index_path.exists():
+        return FileResponse(str(index_path))
+    else:
+        return {"message": "Frontend not built. Run 'npm run build' in frontend directory."}
 
 if __name__ == "__main__":
     import uvicorn
