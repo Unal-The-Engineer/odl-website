@@ -3,11 +3,9 @@ import json
 import uuid
 from typing import Dict, List, Optional
 import logging
-import os
-from pathlib import Path
 
 # Initialize the Azure Functions app
-app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+app = func.FunctionApp()
 
 # In-memory storage for sessions (in production, use Azure Storage or Cosmos DB)
 sessions: Dict[str, dict] = {}
@@ -77,21 +75,9 @@ def create_redirect_response(url):
         }
     )
 
-# Handle CORS preflight requests
-@app.route(route="api/{*path}", methods=["OPTIONS"])
-def handle_cors(req: func.HttpRequest) -> func.HttpResponse:
-    return func.HttpResponse(
-        "",
-        status_code=200,
-        headers={
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization"
-        }
-    )
-
 # Session endpoints
-@app.route(route="api/session/start", methods=["POST"])
+@app.function_name(name="start_session")
+@app.route(route="session/start", methods=["POST"])
 def start_session(req: func.HttpRequest) -> func.HttpResponse:
     try:
         req_body = req.get_json()
@@ -118,7 +104,8 @@ def start_session(req: func.HttpRequest) -> func.HttpResponse:
         logging.error(f"Error in start_session: {str(e)}")
         return create_error_response("Internal server error", 500)
 
-@app.route(route="api/session/{session_id}", methods=["GET"])
+@app.function_name(name="get_session")
+@app.route(route="session/{session_id}", methods=["GET"])
 def get_session(req: func.HttpRequest) -> func.HttpResponse:
     try:
         session_id = req.route_params.get('session_id')
@@ -131,7 +118,8 @@ def get_session(req: func.HttpRequest) -> func.HttpResponse:
         logging.error(f"Error in get_session: {str(e)}")
         return create_error_response("Internal server error", 500)
 
-@app.route(route="api/session/{session_id}/modules", methods=["GET"])
+@app.function_name(name="get_modules")
+@app.route(route="session/{session_id}/modules", methods=["GET"])
 def get_modules(req: func.HttpRequest) -> func.HttpResponse:
     try:
         session_id = req.route_params.get('session_id')
@@ -144,7 +132,8 @@ def get_modules(req: func.HttpRequest) -> func.HttpResponse:
         logging.error(f"Error in get_modules: {str(e)}")
         return create_error_response("Internal server error", 500)
 
-@app.route(route="api/session/{session_id}/module/{module_id}/complete", methods=["POST"])
+@app.function_name(name="complete_module")
+@app.route(route="session/{session_id}/module/{module_id}/complete", methods=["POST"])
 def complete_module(req: func.HttpRequest) -> func.HttpResponse:
     try:
         session_id = req.route_params.get('session_id')
@@ -176,7 +165,8 @@ def complete_module(req: func.HttpRequest) -> func.HttpResponse:
         logging.error(f"Error in complete_module: {str(e)}")
         return create_error_response("Internal server error", 500)
 
-@app.route(route="api/module/{module_id}/content", methods=["GET"])
+@app.function_name(name="get_module_content")
+@app.route(route="module/{module_id}/content", methods=["GET"])
 def get_module_content(req: func.HttpRequest) -> func.HttpResponse:
     try:
         module_id = int(req.route_params.get('module_id'))
@@ -239,7 +229,8 @@ def get_module_content(req: func.HttpRequest) -> func.HttpResponse:
         logging.error(f"Error in get_module_content: {str(e)}")
         return create_error_response("Internal server error", 500)
 
-@app.route(route="api/session/{session_id}/quiz/submit", methods=["POST"])
+@app.function_name(name="submit_quiz")
+@app.route(route="session/{session_id}/quiz/submit", methods=["POST"])
 def submit_quiz(req: func.HttpRequest) -> func.HttpResponse:
     try:
         session_id = req.route_params.get('session_id')
@@ -259,7 +250,8 @@ def submit_quiz(req: func.HttpRequest) -> func.HttpResponse:
         logging.error(f"Error in submit_quiz: {str(e)}")
         return create_error_response("Internal server error", 500)
 
-@app.route(route="api/session/{session_id}/quiz/complete", methods=["POST"])
+@app.function_name(name="complete_quiz_manual")
+@app.route(route="session/{session_id}/quiz/complete", methods=["POST"])
 def complete_quiz_manual(req: func.HttpRequest) -> func.HttpResponse:
     try:
         session_id = req.route_params.get('session_id')
@@ -278,7 +270,8 @@ def complete_quiz_manual(req: func.HttpRequest) -> func.HttpResponse:
         return create_error_response("Internal server error", 500)
 
 # Static file serving endpoints (redirect to Azure Storage)
-@app.route(route="api/videos/{filename}", methods=["GET"])
+@app.function_name(name="serve_video")
+@app.route(route="videos/{filename}", methods=["GET"])
 def serve_video(req: func.HttpRequest) -> func.HttpResponse:
     try:
         filename = req.route_params.get('filename')
@@ -290,7 +283,8 @@ def serve_video(req: func.HttpRequest) -> func.HttpResponse:
         logging.error(f"Error in serve_video: {str(e)}")
         return create_error_response("Internal server error", 500)
 
-@app.route(route="api/comics/{filename}", methods=["GET"])
+@app.function_name(name="serve_comic")
+@app.route(route="comics/{filename}", methods=["GET"])
 def serve_comic(req: func.HttpRequest) -> func.HttpResponse:
     try:
         filename = req.route_params.get('filename')
