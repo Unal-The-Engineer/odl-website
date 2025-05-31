@@ -12,6 +12,10 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 # In-memory storage for sessions (in production, use Azure Storage or Cosmos DB)
 sessions: Dict[str, dict] = {}
 
+# Azure Storage configuration
+STORAGE_ACCOUNT_NAME = "odlwebsitestorage"
+BLOB_BASE_URL = f"https://{STORAGE_ACCOUNT_NAME}.blob.core.windows.net"
+
 # Data models (simplified for Azure Functions)
 INITIAL_MODULES = [
     {
@@ -59,6 +63,17 @@ def create_error_response(message, status_code=400):
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
             "Access-Control-Allow-Headers": "Content-Type, Authorization"
+        }
+    )
+
+# Helper function to create redirect response
+def create_redirect_response(url):
+    return func.HttpResponse(
+        "",
+        status_code=302,
+        headers={
+            "Location": url,
+            "Access-Control-Allow-Origin": "*"
         }
     )
 
@@ -167,12 +182,12 @@ def get_module_content(req: func.HttpRequest) -> func.HttpResponse:
         module_id = int(req.route_params.get('module_id'))
         
         if module_id == 1:
-            # Video module
+            # Video module - now using Azure Storage URL
             return create_response({
                 "type": "video",
                 "title": "Understanding Peace",
                 "description": "Educational video about promoting peace and understanding",
-                "video_url": "/api/videos/animation-odl.MP4",
+                "video_url": f"{BLOB_BASE_URL}/videos/animation-odl.MP4",
                 "filename": "animation-odl.MP4"
             })
         elif module_id == 2:
@@ -187,7 +202,7 @@ def get_module_content(req: func.HttpRequest) -> func.HttpResponse:
                 "completion_method": "manual"
             })
         elif module_id == 3:
-            # Comic module
+            # Comic module - now using Azure Storage URLs
             return create_response({
                 "type": "comic",
                 "title": "Visual Journey: The Power of Unity",
@@ -196,25 +211,25 @@ def get_module_content(req: func.HttpRequest) -> func.HttpResponse:
                         "id": 1,
                         "title": "A New Friend",
                         "description": "Sarah is new to the community and feels nervous about making connections.",
-                        "image_url": "/api/comics/comic-1.jpeg"
+                        "image_url": f"{BLOB_BASE_URL}/comics/comic-1.jpeg"
                     },
                     {
                         "id": 2,
                         "title": "Building Bridges", 
                         "description": "The community welcomes Sarah with open arms and understanding.",
-                        "image_url": "/api/comics/comic-2.jpeg"
+                        "image_url": f"{BLOB_BASE_URL}/comics/comic-2.jpeg"
                     },
                     {
                         "id": 3,
                         "title": "Growing Together",
                         "description": "Through shared activities, new friendships begin to bloom.",
-                        "image_url": "/api/comics/comic-3.jpeg"
+                        "image_url": f"{BLOB_BASE_URL}/comics/comic-3.jpeg"
                     },
                     {
                         "id": 4,
                         "title": "Supporting Each Other",
                         "description": "The community comes together to celebrate their diversity.",
-                        "image_url": "/api/comics/comic-4.jpeg"
+                        "image_url": f"{BLOB_BASE_URL}/comics/comic-4.jpeg"
                     }
                 ]
             })
@@ -262,15 +277,15 @@ def complete_quiz_manual(req: func.HttpRequest) -> func.HttpResponse:
         logging.error(f"Error in complete_quiz_manual: {str(e)}")
         return create_error_response("Internal server error", 500)
 
-# Static file serving endpoints (for videos and comics)
+# Static file serving endpoints (redirect to Azure Storage)
 @app.route(route="api/videos/{filename}", methods=["GET"])
 def serve_video(req: func.HttpRequest) -> func.HttpResponse:
     try:
         filename = req.route_params.get('filename')
         
-        # In Azure Functions, static files should be served from Azure Storage
-        # For now, return a placeholder response
-        return create_error_response("Video files should be served from Azure Storage", 501)
+        # Redirect to Azure Blob Storage
+        blob_url = f"{BLOB_BASE_URL}/videos/{filename}"
+        return create_redirect_response(blob_url)
     except Exception as e:
         logging.error(f"Error in serve_video: {str(e)}")
         return create_error_response("Internal server error", 500)
@@ -280,9 +295,9 @@ def serve_comic(req: func.HttpRequest) -> func.HttpResponse:
     try:
         filename = req.route_params.get('filename')
         
-        # In Azure Functions, static files should be served from Azure Storage
-        # For now, return a placeholder response
-        return create_error_response("Comic files should be served from Azure Storage", 501)
+        # Redirect to Azure Blob Storage
+        blob_url = f"{BLOB_BASE_URL}/comics/{filename}"
+        return create_redirect_response(blob_url)
     except Exception as e:
         logging.error(f"Error in serve_comic: {str(e)}")
         return create_error_response("Internal server error", 500) 
