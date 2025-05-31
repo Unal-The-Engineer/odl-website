@@ -58,7 +58,7 @@ const ComicModule: React.FC = () => {
     <div className="space-y-6">
       <header>
         <h2 className="text-2xl font-bold text-sky-900 mb-2">{comicContent.title}</h2>
-        <p className="text-sky-800/80">Follow this story about how understanding creates strong communities.</p>
+        <p className="text-sky-800/80">Learn through interactive scenarios about bullying prevention and response.</p>
       </header>
 
       <div className="bg-white/30 backdrop-blur-sm rounded-2xl border border-white/50 overflow-hidden">
@@ -134,7 +134,7 @@ const ComicModule: React.FC = () => {
       <div className="bg-sky-100/50 rounded-2xl p-6 border border-sky-200/50">
         <h3 className="font-semibold text-sky-900 mb-2">Story Message:</h3>
         <p className="text-sky-800/80">
-          This story shows how understanding and acceptance can transform a community. When we embrace our differences and support each other, we create a more peaceful and harmonious world.
+          These scenarios show how awareness and action can prevent bullying. When we recognize harmful behaviors and support those who need help, we create a safer environment for everyone.
         </p>
       </div>
     </div>

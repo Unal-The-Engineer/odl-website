@@ -62,7 +62,7 @@ const QuizModule: React.FC = () => {
           
           <h3 className="text-2xl font-bold text-sky-900 mb-4">Well Done!</h3>
           <p className="text-lg text-sky-800/80 max-w-md mx-auto mb-8">
-            You've successfully completed the millionaire quiz and learned important lessons about peace and understanding.
+            You've successfully completed the millionaire quiz and learned important lessons about bullying awareness and prevention.
           </p>
           
           <Button 
@@ -134,7 +134,7 @@ const QuizModule: React.FC = () => {
       <div className="bg-sky-100/50 rounded-2xl p-6 border border-sky-200/50">
         <h3 className="font-semibold text-sky-900 mb-2">About This Quiz:</h3>
         <p className="text-sky-800/80">
-          Test your knowledge about peace, understanding, and community building with this interactive millionaire-style quiz. 
+          Test your knowledge about bullying awareness, intervention strategies, and creating safe communities with this interactive millionaire-style quiz. 
           Answer questions correctly to progress through the levels!
         </p>
       </div>

@@ -35,13 +35,13 @@ const CompletionPage: React.FC = () => {
           
           <div className="max-w-2xl mx-auto">
             <p className="text-2xl text-sky-900/80 mb-8 font-light">
-              You've completed your peace journey! You now have the knowledge to create positive change and support others.
+              You've finished your stand up against bullying journey! You now have the knowledge to create positive change and support others.
             </p>
             
             <div className="bg-sky-100/50 rounded-2xl p-8 mb-10 border border-sky-200/50">
               <h3 className="text-2xl font-bold text-sky-900 mb-4">Your Achievement</h3>
               <p className="text-lg text-sky-800/80">
-                As a Peace Champion, you've learned valuable skills that can help create a more harmonious and supportive community.
+                As a Bullying Awareness Champion, you've learned valuable skills that can help create a safer and more supportive community.
               </p>
             </div>
             
@@ -61,7 +61,7 @@ const CompletionPage: React.FC = () => {
       <div className="mt-8 flex flex-wrap justify-center gap-6">
         <div className="flex items-center bg-white/30 backdrop-blur-sm rounded-full px-6 py-3 border border-white/50">
           <Award className="mr-2 text-sky-500" size={24} />
-          <span className="font-medium text-sky-900">Peace Champion</span>
+          <span className="font-medium text-sky-900">Bullying Awareness Champion</span>
         </div>
         <div className="flex items-center bg-white/30 backdrop-blur-sm rounded-full px-6 py-3 border border-white/50">
           <Award className="mr-2 text-teal-500" size={24} />

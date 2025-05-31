@@ -32,7 +32,7 @@ const EducationPage: React.FC = () => {
       <header className="relative bg-white/30 backdrop-blur-sm border-b border-white/50 shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-sky-900">Peace Journey</h1>
+            <h1 className="text-2xl font-bold text-sky-900">Bullying Awareness Journey</h1>
             <div className="text-lg text-sky-800">
               <span className="font-normal">Welcome, </span>
               <span className="font-semibold">{userName}</span>
@@ -53,7 +53,7 @@ const EducationPage: React.FC = () => {
           
           <div className="mt-6 bg-sky-100/50 rounded-xl p-4 border border-sky-200/50">
             <p className="text-sm text-sky-800">
-              Complete all modules to earn your Peace Champion badge!
+              Complete all modules to earn your Bullying Awareness Champion badge!
             </p>
           </div>
         </aside>

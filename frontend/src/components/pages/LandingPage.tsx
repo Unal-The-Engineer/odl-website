@@ -32,15 +32,15 @@ const LandingPage: React.FC = () => {
       <div className="w-full max-w-4xl px-4 relative">
         <div className="text-center mb-12">
           <h1 className="text-6xl md:text-7xl font-bold mb-6 font-display">
-            <span className="text-sky-800">Create</span>
+            <span className="text-sky-800">Stand Against</span>
             <br />
             <span className="bg-gradient-to-r from-sky-600 via-teal-500 to-blue-500 bg-clip-text text-transparent">
-              Peace
+              Bullying
             </span>
           </h1>
           
           <p className="text-xl md:text-2xl text-sky-900/80 max-w-2xl mx-auto font-light">
-            Join our community in building a peaceful world. Learn how to promote understanding and support your friends.
+            Join our community in creating a safe environment. Learn how to recognize bullying and support those who need help.
           </p>
         </div>
 
@@ -80,20 +80,20 @@ const LandingPage: React.FC = () => {
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300">
             <Heart size={32} className="text-sky-500 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-sky-900 mb-2">Foster Understanding</h3>
-            <p className="text-sky-800/70">Learn how empathy creates lasting connections</p>
+            <h3 className="text-lg font-semibold text-sky-900 mb-2">Recognize Bullying</h3>
+            <p className="text-sky-800/70">Learn to identify different types of bullying behaviors</p>
           </div>
           
           <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300">
             <Shield size={32} className="text-teal-500 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-sky-900 mb-2">Promote Peace</h3>
-            <p className="text-sky-800/70">Discover ways to create harmony in your community</p>
+            <h3 className="text-lg font-semibold text-sky-900 mb-2">Take Action</h3>
+            <p className="text-sky-800/70">Learn effective ways to intervene and help victims</p>
           </div>
           
           <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300">
             <Users size={32} className="text-blue-500 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-sky-900 mb-2">Build Unity</h3>
-            <p className="text-sky-800/70">Create strong bonds through mutual respect</p>
+            <h3 className="text-lg font-semibold text-sky-900 mb-2">Support Others</h3>
+            <p className="text-sky-800/70">Create a caring community where everyone feels safe</p>
           </div>
         </div>
       </div>

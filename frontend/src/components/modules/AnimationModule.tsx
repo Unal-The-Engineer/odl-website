@@ -115,17 +115,17 @@ const AnimationModule: React.FC = () => {
       <div className="bg-white/30 backdrop-blur-sm rounded-2xl border border-white/50 p-6">
         <h3 className="font-semibold text-sky-900 mb-3">What You'll Learn:</h3>
         <ul className="list-disc list-inside space-y-2 text-sky-800/80">
-          <li>Understanding different perspectives</li>
-          <li>Building empathy and compassion</li>
-          <li>Steps to promote harmony</li>
-          <li>Ways to support and uplift others</li>
+          <li>Recognizing different types of bullying</li>
+          <li>Understanding the impact of bullying</li>
+          <li>Steps to safely intervene</li>
+          <li>Ways to support bullying victims</li>
         </ul>
       </div>
 
       <div className="bg-sky-100/50 rounded-2xl p-6 border border-sky-200/50">
         <h3 className="font-semibold text-sky-900 mb-2">Key Takeaways:</h3>
         <p className="text-sky-800/80">
-          Everyone deserves to feel safe and respected. By understanding each other better, we can create a more peaceful and supportive environment for all.
+          Everyone deserves to feel safe and respected. By recognizing bullying and taking action, we can create a supportive environment where everyone is protected.
         </p>
       </div>
     </div>
