@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Award, ArrowRight, ExternalLink } from 'lucide-react';
 import { useAppContext } from '../../context/AppContext';
 import Button from '../ui/Button';
+import { buildApiUrl, API_ENDPOINTS } from '../../config/api';
 
 interface QuizContent {
   type: string;
@@ -20,7 +21,7 @@ const QuizModule: React.FC = () => {
 
   useEffect(() => {
     // Fetch quiz content from backend
-    fetch('/api/module/2/content')
+    fetch(buildApiUrl(API_ENDPOINTS.MODULE.CONTENT(2)))
       .then(response => response.json())
       .then(data => setQuizContent(data))
       .catch(error => console.error('Error fetching quiz content:', error));

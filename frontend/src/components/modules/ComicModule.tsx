@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, ArrowLeft, BookOpen } from 'lucide-react';
 import { useAppContext } from '../../context/AppContext';
 import Button from '../ui/Button';
+import { buildApiUrl, API_ENDPOINTS } from '../../config/api';
 
 interface ComicPage {
   id: number;
@@ -23,7 +24,7 @@ const ComicModule: React.FC = () => {
 
   useEffect(() => {
     // Fetch comic content from backend
-    fetch('/api/module/3/content')
+    fetch(buildApiUrl(API_ENDPOINTS.MODULE.CONTENT(3)))
       .then(response => response.json())
       .then(data => setComicContent(data))
       .catch(error => console.error('Error fetching comic content:', error));

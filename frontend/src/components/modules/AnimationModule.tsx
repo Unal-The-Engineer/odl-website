@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Play, ArrowRight, Pause } from 'lucide-react';
 import { useAppContext } from '../../context/AppContext';
 import Button from '../ui/Button';
+import { buildApiUrl, API_ENDPOINTS } from '../../config/api';
 
 interface VideoContent {
   type: string;
@@ -20,7 +21,7 @@ const AnimationModule: React.FC = () => {
 
   useEffect(() => {
     // Fetch video content from backend
-    fetch('/api/module/1/content')
+    fetch(buildApiUrl(API_ENDPOINTS.MODULE.CONTENT(1)))
       .then(response => response.json())
       .then(data => setVideoContent(data))
       .catch(error => console.error('Error fetching video content:', error));
